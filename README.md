@@ -89,6 +89,11 @@
 - Custom system sounds for notifications
 - Font files (JetBrains Mono Nerd, SF Pro Display)
 
+## 🚧 Upcoming Features
+
+- 🎨 rEFInd Themes
+- 📦 Additional Packages
+
 ## 🚀 Quick Start
 
 ### Prerequisites
