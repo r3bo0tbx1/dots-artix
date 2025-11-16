@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "killall wlogout && sleep 0.15 && sh /home/jason/Scripts/lockscreen",
+    "action" : "killall wlogout && sleep 0.15 && sh $HOME/Scripts/lockscreen",
     "text" : "Lock",
     "keybind" : "l"
 }

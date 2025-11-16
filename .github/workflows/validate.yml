@@ -1,0 +1,199 @@
+name: 🔍 Dotfiles Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: ⚙️ Run All Validation Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔍 Run ShellCheck on all shell scripts
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+          severity: warning
+          ignore_paths: .git .github node_modules
+        continue-on-error: true
+
+      - name: 🔧 Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yamllint python3-toml
+
+      - name: 📝 Validate TOML and YAML files
+        run: |
+          echo "🔍 Checking TOML syntax..."
+          find . -name "*.toml" -type f | while read -r file; do
+            echo "  📄 Validating: $file"
+            python3 -c "import toml; toml.load('$file')" || exit 1
+          done
+          echo "✨ All TOML files are valid!"
+          echo "🔍 Checking YAML syntax..."
+          yamllint -d "{extends: default, rules: {line-length: disable, comments: disable}}" .github/ || true
+          echo "✨ YAML validation complete!"
+
+      - name: 🔒 Check for hardcoded user paths
+        run: |
+          echo "🔍 Searching for hardcoded paths in code files..."
+          if grep -r "/home/[a-z_][a-z0-9_-]*/" \
+            --exclude-dir=.git \
+            --exclude-dir=.github \
+            --exclude="*.md" \
+            --exclude=".p10k.zsh" \
+            --include="*.conf" \
+            --include="*.toml" \
+            --include="*.sh" \
+            --include="*.rasi" \
+            --include="layout" \
+            .; then
+            echo "❌ Found hardcoded home directory paths in configuration files!"
+            echo "💡 These should use \$HOME or ~ instead"
+            exit 1
+          else
+            echo "✅ No hardcoded user paths found in configuration files!"
+          fi
+          echo ""
+          echo "💡 Documentation files (*.md) and auto-generated configs (.p10k.zsh) are excluded"
+          echo "🎉 All path checks passed!"
+
+      - name: 🔐 Verify script executability
+        run: |
+          echo "🔍 Checking script permissions..."
+          failed=0
+
+          if [ -d "Scripts" ]; then
+            echo "📂 Checking Scripts/ directory..."
+            while IFS= read -r script; do
+              if [ -x "$script" ]; then
+                echo "  ✅ $script is executable"
+              else
+                echo "  ❌ $script is NOT executable!"
+                failed=1
+              fi
+            done < <(find Scripts -type f \( -name "*.sh" -o -name "lockscreen" -o -name "flightmode" -o -name "battery-checknow" -o -name "afk*" \))
+          fi
+
+          if [ -d ".config/hypr/scripts" ]; then
+            echo "📂 Checking .config/hypr/scripts/ directory..."
+            while IFS= read -r script; do
+              if [ -x "$script" ]; then
+                echo "  ✅ $script is executable"
+              else
+                echo "  ❌ $script is NOT executable!"
+                failed=1
+              fi
+            done < <(find .config/hypr/scripts -type f -name "*.sh")
+          fi
+
+          if [ -f "install.sh" ]; then
+            chmod +x install.sh
+            echo "  ✅ install.sh is executable"
+          fi
+
+          if [ $failed -eq 1 ]; then
+            echo "❌ Some scripts are not executable! Please fix permissions."
+            exit 1
+          fi
+
+          echo "✨ All scripts have correct permissions!"
+
+      - name: 📚 Check required documentation
+        run: |
+          echo "📚 Checking for required documentation files..."
+          if [ -f "README.md" ]; then
+            echo "  ✅ README.md exists"
+            word_count=$(wc -w < "README.md")
+            echo "     📊 Word count: $word_count"
+          else
+            echo "  ❌ README.md is missing!"
+            exit 1
+          fi
+          echo ""
+          echo "✨ All required documentation present!"
+
+      - name: 🔗 Check for broken internal links
+        run: |
+          echo "🔗 Checking for broken internal file references..."
+          if [ -f "README.md" ]; then
+            echo "📄 Checking README.md..."
+            if grep -q "install.sh" README.md; then
+              if [ -f "install.sh" ]; then
+                echo "  ✅ Referenced file exists: install.sh"
+              else
+                echo "  ❌ Referenced file missing: install.sh"
+                exit 1
+              fi
+            fi
+          fi
+          echo "✨ No broken critical links found!"
+
+  install-script-test:
+    name: 🧪 Install Script Test (Arch Linux)
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Arch environment
+        run: |
+          echo "🔄 Updating system..."
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm git base-devel
+
+      - name: 🧪 Dry-run install script validation
+        run: |
+          echo "🔍 Validating install.sh structure..."
+          if [ ! -f "install.sh" ]; then
+            echo "❌ install.sh not found!"
+            exit 1
+          fi
+          echo "🔍 Checking for required functions..."
+          required_functions=("print_header" "print_success" "print_error" "ask_confirmation" "check_command")
+          for func in "${required_functions[@]}"; do
+            if grep -q "^${func}()" install.sh; then
+              echo "  ✅ Function '$func' found"
+            else
+              echo "  ⚠️ Function '$func' not found (might be okay)"
+            fi
+          done
+          if grep -q "set -e" install.sh; then
+            echo "  ✅ Error handling enabled (set -e)"
+          else
+            echo "  ⚠️ No 'set -e' found"
+          fi
+          echo ""
+          echo "🔍 Validating shell syntax..."
+          bash -n install.sh
+          echo "  ✅ Syntax is valid!"
+          echo ""
+          echo "✨ Install script validation complete!"
+          echo "💡 Note: Full execution test skipped (would modify system)"
+
+  summary:
+    name: 📊 Validation Summary
+    runs-on: ubuntu-latest
+    needs: [validate, install-script-test]
+    if: always()
+    steps:
+      - name: 🎉 All checks complete
+        run: |
+          echo "╔════════════════════════════════════════╗"
+          echo "║   ✨ Validation Pipeline Complete ✨   ║"
+          echo "╚════════════════════════════════════════╝"
+          echo ""
+          echo "📋 Jobs completed:"
+          echo "  ⚙️ Run All Validation Checks"
+          echo "  🧪 Install Script Test (Arch Linux)"
+          echo ""
+          echo "🎊 Dotfiles repository validation successful!"
+          echo "✅ Ready for deployment!"

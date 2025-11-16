@@ -1,0 +1,226 @@
+# Dotfiles Repository - Git Ignore File
+
+# ============================================================================
+# Cache and Generated Files
+# ============================================================================
+
+# General cache directories
+.cache/
+**/cache/
+*.cache
+
+# PyWAL generated files (user-specific colors)
+# Note: Keep templates, ignore generated color schemes
+.config/wal/colors-*
+**/.cache/wal/
+
+# Thumbnail caches
+.thumbnails/
+**/.cache/wallpaper-selector/
+
+# ============================================================================
+# Shell Files
+# ============================================================================
+
+# Zsh
+.config/zsh/.zcompdump*
+.config/zsh/.zsh_history
+.config/zsh/.zsh_sessions/
+*.zwc
+
+# Bash
+.bash_history
+.bash_sessions/
+
+# Shell history
+.history
+
+# ============================================================================
+# Temporary and Backup Files
+# ============================================================================
+
+# Temporary files
+/tmp/
+*.tmp
+*.temp
+*~
+.*.swp
+.*.swo
+*.bak
+
+# Backup files
+*.backup
+*.old
+*-backup
+*-old
+
+# Editor temporary files
+.*.swn
+.netrwhist
+
+# ============================================================================
+# Personal and Sensitive Data
+# ============================================================================
+
+# SSH keys
+.ssh/
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# GPG/PGP
+.gnupg/
+*.gpg
+*.pgp
+
+# Password stores
+.password-store/
+
+# Environment files with secrets
+.env
+.env.local
+*.secret
+
+# ============================================================================
+# Application-Specific
+# ============================================================================
+
+# Hyprland
+.config/hypr/hyprland.log
+.hyprland/
+
+# GTK
+.config/gtk-*/bookmarks
+
+# Recently used files
+.local/share/recently-used.xbel
+
+# ============================================================================
+# Development Files
+# ============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Rust
+target/
+Cargo.lock
+
+# ============================================================================
+# System Files
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ============================================================================
+# Media Files (Optional - uncomment if not using Git LFS)
+# ============================================================================
+
+# Large wallpapers (already excluded from repo)
+# Wallpapers/
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.bmp
+# *.webp
+
+# Large media files
+# *.mp4
+# *.mkv
+# *.avi
+# *.mov
+
+# ============================================================================
+# Build and Package Files
+# ============================================================================
+
+# Compiled binaries
+*.o
+*.a
+*.so
+*.exe
+*.dll
+
+# Package files
+*.deb
+*.rpm
+*.pkg.tar.zst
+
+# ============================================================================
+# IDE and Editor Files
+# ============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+
+# ============================================================================
+# Logs
+# ============================================================================
+
+*.log
+logs/
+*.log.*
+
+# ============================================================================
+# Testing and CI/CD (if added)
+# ============================================================================
+
+# Test coverage
+coverage/
+*.cover
+.coverage
+
+# CI artifacts
+.github/workflows/cache/
+
+# ============================================================================
+# Custom Exclusions
+# ============================================================================
+
+# User-specific configurations that shouldn't be shared
+# Add your own exclusions below:
+
+# Example: Personal notes
+# notes.md
+# TODO-personal.md
