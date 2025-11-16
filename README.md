@@ -187,11 +187,9 @@ chsh -s $(which zsh)
 
 # 6. Install Zsh plugins (if not already installed)
 # Powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-  ~/.local/share/powerlevel10k
-
-# fzf-tab, syntax-highlighting, autosuggestions, etc.
-# (Add installation commands here)
+paru -S zsh-theme-powerlevel10k-git ttf-meslo-nerd-font-powerlevel10k
+# Remaining Plugins
+paru -S fzf-tab-git zsh-syntax-highlighting zsh-autosuggestions zsh-vi-mode zsh-you-should-use zsh-auto-notify
 
 # 7. Add wallpapers to ~/dotfiles/Wallpapers/
 mkdir -p ~/dotfiles/Wallpapers
