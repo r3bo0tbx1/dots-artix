@@ -118,7 +118,7 @@ rofi-wayland wofi wlogout
 grim slurp
 
 # Audio & Media
-pipewire wireplumber playerctl paplay
+pipewire pipewire-<your-init> wireplumber wireplumber-<your-init> playerctl paplay
 
 # Terminal & Shell
 alacritty kitty zsh
