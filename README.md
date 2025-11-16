@@ -136,7 +136,7 @@ brightnessctl thunar eza fzf fastfetch zoxide
 ```bash
 # 1. Clone this repository
 cd ~
-git clone https://github.com/r3bo0tbx1/dotfiles.git
+git clone https://github.com/ShengHuiPang/dotfiles.git
 cd dotfiles
 
 # 2. Run the installation script
@@ -162,7 +162,7 @@ The install script features:
 ```bash
 # 1. Clone this repository
 cd ~
-git clone https://github.com/r3bo0tbx1/dotfiles.git
+git clone https://github.com/ShengHuiPang/dotfiles.git
 
 # 2. Backup your current configs (IMPORTANT!)
 mkdir -p ~/dotfiles-backup
