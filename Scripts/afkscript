@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Define the window title and casting interval (in seconds)
+window_title="Minecraft 1.21"
+casting_interval=5  # Adjust this based on your fishing needs
+
+# Function to focus the Minecraft window
+focus_window() {
+    echo "Focusing window titled '$window_title'..."
+    # Get the window ID for the Minecraft window
+    window_id=$(hyprctl clients -j | jq -r --arg title "$window_title" \
+      '.[] | select(.title | contains($title)) | .id')
+
+    if [ -z "$window_id" ]; then
+        echo "No window with title containing '$window_title' found."
+        exit 1
+    fi
+
+    # Focus the window
+    hyprctl dispatch focuswindow Minecraft 1.21
+    echo "Focused window with ID $window_title."
+
+    # Wait to ensure the focus is applied
+    sleep 1
+}
+
+# Function to simulate mouse click using ydotool
+simulate_click() {
+    local button=$1
+    echo "Simulating mouse button click with code $button..."
+    # Simulate mouse click using ydotool
+    ydotool click "$button"
+}
+
+# Main loop for auto-fishing
+while true; do
+    focus_window
+
+    # Simulate a right mouse button click to cast the line
+    simulate_click 3  # 3 is typically the button code for right-click
+
+    # Wait for the casting interval
+    sleep "$casting_interval"
+
+    # Simulate another right mouse button click to reel in
+    simulate_click 3  # Right-click to reel in
+
+    # Wait before the next casting
+    sleep 2
+done
+

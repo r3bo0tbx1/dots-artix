@@ -1,0 +1,36 @@
+{
+    "label" : "lock",
+    "action" : "killall wlogout && sleep 0.15 && sh /home/jason/Scripts/lockscreen",
+    "text" : "Lock",
+    "keybind" : "l"
+}
+{
+    "label" : "hibernate",
+    "action" : "killall wlogout && sleep 0.25 && loginctl hibernate",
+    "text" : "Hibernate",
+    "keybind" : "h"
+}
+{
+    "label" : "logout",
+    "action" : "killall wlogout && sleep 0.25 && hyprctl dispatch exit",
+    "text" : "Logout",
+    "keybind" : "e"
+}
+{
+    "label" : "shutdown",
+    "action" : "killall wlogout && sleep 0.25 && loginctl poweroff",
+    "text" : "Shutdown",
+    "keybind" : "s"
+}
+{
+    "label" : "suspend",
+    "action" : "killall wlogout && sleep 0.25 && loginctl suspend",
+    "text" : "Suspend",
+    "keybind" : "u"
+}
+{
+    "label" : "reboot",
+    "action" : "killall wlogout && sleep 0.25 && loginctl reboot",
+    "text" : "Reboot",
+    "keybind" : "r"
+}

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Find window ID by searching for window class
+window_id=$(swaymsg -t get_tree | jq -r '.. | select(.class? == "Minecraft") | .id')
+
+# If a window ID is found, simulate a right mouse click
+if [ -n "$window_id" ]; then
+  # Convert sway window ID to hexadecimal if needed
+  hex_window_id=$(printf "0x%x\n" "$window_id")
+
+  # Simulate right mouse click using ydotool
+  ydotool mousemove 100 100  # Adjust coordinates as needed
+  ydotool click 3  # Right mouse button click
+fi
+

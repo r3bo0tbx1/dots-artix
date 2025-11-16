@@ -1,0 +1,10 @@
+#!/bin/bash
+wifi="$(nmcli r wifi | awk 'FNR = 2 {print $1}')"
+if [ "$wifi" == "enabled" ]; then
+    rfkill block all &
+    notify-send -i /usr/share/icons/breeze/status/24/network-flightmode-on.svg 'Flight Mode: On'
+else
+    rfkill unblock all &
+    notify-send -i /usr/share/icons/breeze/status/24/network-flightmode-off.svg 'Flight Mode: Off'
+fi
+
