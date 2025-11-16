@@ -20,25 +20,25 @@ while true; do
 
     # If battery full and not already warned about that
     if [ "$last" != "FULL" ] && [ "$status" = "Full" ]; then
-	  paplay /home/jason/Music/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery full" "Current state: $capacity%"
+	  paplay $HOME/dotfiles/Scripts/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery full" "Current state: $capacity%"
       last="FULL"
     fi
 
     # If 50%
     if [ "$last" != "Half" ] && [ "$status" = "Charging" ] && [ $capacity = $half ]; then
-	  paplay /home/jason/Music/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery status" "Current state: $capacity%"
+	  paplay $HOME/dotfiles/Scripts/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery status" "Current state: $capacity%"
       last=Half
     fi
 
     # If low and discharging
     if [ "$last" != "LOW" ] && [ "$status" = "Discharging" ] && [ $capacity -le $low ]; then
-	  paplay /home/jason/Music/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery low" "Current state: $capacity%"
+	  paplay $HOME/dotfiles/Scripts/.sys_sounds/notification.wav & notify-send -a batstat -r 101 "Battery low" "Current state: $capacity%"
       last=LOW
     fi
 
     # If critical and discharging
     if [ "$status" = "Discharging" ] && [ $capacity -le $critical ]; then
-	  paplay /home/jason/Music/.sys_sounds/notification.wav & notify-send -u critical -a batstat -r 101 "Battery critical" "Current state: $capacity%"
+	  paplay $HOME/dotfiles/Scripts/.sys_sounds/notification.wav & notify-send -u critical -a batstat -r 101 "Battery critical" "Current state: $capacity%"
       last=CRITICAL
     fi
   fi
