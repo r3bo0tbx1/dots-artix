@@ -340,41 +340,64 @@ print_header "Installing Zsh Plugins"
 # Powerlevel10k
 if [ ! -d "$HOME/.local/share/powerlevel10k" ]; then
     print_info "Installing Powerlevel10k..."
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-        "$HOME/.local/share/powerlevel10k"
+    paru -S --noconfirm zsh-theme-powerlevel10k-git ttf-meslo-nerd-font-powerlevel10k
     print_success "Powerlevel10k installed"
 else
     print_success "Powerlevel10k already installed"
 fi
 
 # fzf-tab
-if [ ! -d "$HOME/.local/share/fzf-tab" ]; then
+if [ ! -d "/usr/share/zsh/plugins/fzf-tab-git" ]; then
     print_info "Installing fzf-tab..."
-    git clone https://github.com/Aloxaf/fzf-tab.git \
-        "$HOME/.local/share/fzf-tab"
+    paru -S --noconfirm fzf-tab-git
     print_success "fzf-tab installed"
 else
     print_success "fzf-tab already installed"
 fi
 
 # zsh-syntax-highlighting
-if [ ! -d "$HOME/.local/share/zsh-syntax-highlighting" ]; then
+if [ ! -d "/usr/share/zsh/plugins/zsh-syntax-highlighting" ]; then
     print_info "Installing zsh-syntax-highlighting..."
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        "$HOME/.local/share/zsh-syntax-highlighting"
+    paru -S --noconfirm zsh-syntax-highlighting
     print_success "zsh-syntax-highlighting installed"
 else
     print_success "zsh-syntax-highlighting already installed"
 fi
 
 # zsh-autosuggestions
-if [ ! -d "$HOME/.local/share/zsh-autosuggestions" ]; then
+if [ ! -d "/usr/share/zsh/plugins/zsh-autosuggestions" ]; then
     print_info "Installing zsh-autosuggestions..."
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-        "$HOME/.local/share/zsh-autosuggestions"
+    paru -S --noconfirm zsh-autosuggestions
     print_success "zsh-autosuggestions installed"
 else
     print_success "zsh-autosuggestions already installed"
+fi
+
+# zsh-vi-mode
+if [ ! -d "/usr/share/zsh/plugins/zsh-vi-mode" ]; then
+    print_info "Installing zsh-autosuggestions..."
+    paru -S --noconfirm zsh-vi-mode
+    print_success "zsh-vi-mode installed"
+else
+    print_success "zsh-vi-mode already installed"
+fi
+
+# zsh-you-should-use
+if [ ! -d "/usr/share/zsh/plugins/zsh-you-should-use" ]; then
+    print_info "Installing zsh-you-should-use..."
+    paru -S --noconfirm zsh-you-should-use
+    print_success "zsh-you-should-use installed"
+else
+    print_success "zsh-you-should-use already installed"
+fi
+
+# zsh-auto-notify
+if [ ! -d "/usr/share/zsh/plugins/zsh-auto-notify" ]; then
+    print_info "Installing zsh-auto-notify..."
+    paru -S --noconfirm zsh-auto-notify
+    print_success "zsh-auto-notify installed"
+else
+    print_success "zsh-auto-notify already installed"
 fi
 
 # ============================================================================
