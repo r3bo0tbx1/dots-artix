@@ -30,12 +30,12 @@ if [ -z "$EXISTS" ]; then
             ;;
         "Cancel" | "" )
             hyprctl output remove "$MON"
-            rm -f /home/jason/.cache/wofi-dmenu
+            rm -f $HOME/.cache/wofi-dmenu
             exit 0
             ;;
         *)
             hyprctl output remove "$MON"
-            rm -f /home/jason/.cache/wofi-dmenu
+            rm -f $HOME/.cache/wofi-dmenu
             exit 1
             ;;
     esac
