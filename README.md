@@ -106,7 +106,7 @@
 **Essential Packages:**
 ```bash
 # Core Wayland & Hyprland
-hyprland hyprpanel hyprlock xdg-desktop-portal-hyprland
+hyprland hyprpanel hyprlock xdg-desktop-portal-hyprland wayvnc
 
 # Wallpaper & Theming
 swww python-pywal imagemagick
