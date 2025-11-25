@@ -55,6 +55,10 @@
 
 ### Configuration Files
 ```
+.profile1.jpg
+.profile2.jpg
+.stow-local-ignore
+.zshenv
 .config/
 ├── hypr/
 │   ├── hyprland.conf
@@ -72,6 +76,8 @@
 ├── wofi/
 ├── wlogout/
 └── aliasrc
+install.sh
+README.md
 ```
 
 ### Custom Scripts
